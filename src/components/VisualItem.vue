@@ -1,17 +1,33 @@
 <template>
-  <div 
+<div 
   v-bind:items="items">
   <!--for a non-shuffled array -->
   <div v-if="isShuffled==false"> 
-  <div :key="item" v-for="item in items">
-  <div @click="deleteItem(item)" :key="n" v-for="n in item.amount" class="square" v-bind:style="{ 'background-color':item.color}"> </div> </div>
+    <div :key="item" v-for="item in items">
+      <div class="form-row" v-for="x in item.amount" :key="x">
+        <div 
+        v-if="item.isChecked" 
+        @click="deleteItem(item)" 
+        class="square" 
+        v-bind:style="{ 'background-color':item.color}"> 
+        </div> 
+      </div>
+    </div>
   </div>
-  </div>
+</div>
 
   <!-- for a shuffled array-->
-  <div v-bind:items="shuffledItems" v-if="isShuffled"> 
-  <div :key="item" v-for="item in shuffledItems">
-  <div @click="deleteItem(item)" :key="n" v-for="n in item.amount" class="square" v-bind:style="{ 'background-color':item.color}"> </div> </div>
+  <div v-if="isShuffled"> 
+    <div :key="item" v-for="item in shuffledItems">
+      <div class="form-row" v-for="x in item.amount" :key="x">
+        <div 
+        v-if="item.isChecked" 
+        @click="deleteItem(item)" 
+        class="square" 
+        v-bind:style="{ 'background-color':item.color}"> 
+        </div> 
+      </div>
+    </div>
   </div>
 </template>
 
@@ -32,11 +48,10 @@ export default {
   },
   computed: {
   shuffledItems() {
-    console.log(this.items.slice(0).sort(() => Math.random() - 0.5))
-    return this.items.slice(0).sort(() => Math.random() - 0.5)
+     return this.items.slice(0).sort(() => Math.random() - 0.5)
+  },
+}
   }
-}
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -47,6 +62,9 @@ export default {
     height: 10px;
     margin: 1px;
     display: inline-block;
+}
+.form-row {
+  display: inline-block;
 }
 
 

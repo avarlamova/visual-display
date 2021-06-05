@@ -2,9 +2,18 @@
   <li v-for="item in items"
   v-bind:items="items" 
   :key="item.key"> 
-  <input type="checkbox" v-model="item.isChecked">
-  <input @change="onAmountChange(item)" type="number" v-model="item.amount"> 
-  <input type="color" v-model="item.color">
+    <input 
+    type="checkbox" 
+    v-model="item.isChecked">
+
+    <input 
+    @change="onAmountChange(item)" 
+    type="number" 
+    v-model="item.amount"> 
+
+    <input 
+    type="color" 
+    v-model="item.color">
   </li>
 </template>
 
@@ -14,8 +23,6 @@ export default {
   props: ['items'],
   data() {
     return {
-      color: '',
-      amount: '',
     }
   },
   methods: {

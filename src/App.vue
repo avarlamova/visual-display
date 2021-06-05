@@ -3,7 +3,6 @@
   <div class="left">
   <List 
   v-bind:lists="lists"
-  v-bind:keys="keys"
   v-bind:items="items"
   @amount-changed="changeItemAmount"
   />
@@ -11,6 +10,7 @@
   <div class="right">
   <VisualPanel
   @item-deleted="deleteItem"
+  @list-shuffled="shuffleList"
   v-bind:lists="lists"
   v-bind:items="items" />
   </div>
@@ -24,7 +24,12 @@ export default {
   name: 'App',
   data(){
     return {
-      keys: [1,2,3,4,5,6,7,8,9,10],
+      createList: function() {
+        return {
+          id: Math.random(),
+          isShown: true
+        }
+      },
       lists: [
         {id: 1, isShown:true},
         {id: 2, isShown:false},
@@ -32,22 +37,23 @@ export default {
         {id:4, isShown:false},
         {id:5, isShown:false},
         ],
-      lengthRange: [4,5,6,7,8,9,10],
       items: [
-        {amount: Math.floor( Math.random() * 100), color:'#800000', isChecked: true},
-        {amount: Math.floor( Math.random() * 100), color:'#0000FF', isChecked: true},
-        {amount: Math.floor( Math.random() * 100), color:'#00FF00', isChecked: true},
-        {amount: Math.floor( Math.random() * 100), color:'#FFFF00', isChecked: true},
+        {amount: Math.floor(Math.random() * 50), color:'#800000', isChecked: true},
+        {amount: Math.floor(Math.random() * 50), color:'#0000FF', isChecked: true},
+        {amount: Math.floor(Math.random() * 50), color:'#00FF00', isChecked: true},
+        {amount: Math.floor(Math.random() * 50), color:'#FFFF00', isChecked: true},
         ],
     }
   },
   methods: {
       changeItemAmount(idx,val) {
-        console.log(idx, val)
         this.items[idx]['amount'] = parseInt(val);
       },
       deleteItem(idx,val) {
         this.items[idx]['amount'] = parseInt(val);
+      },
+      shuffleList(idx) {
+        this.lists[idx]['isShuffled']=!this.lists[idx]['isShuffled']
       }
   },
   components: {

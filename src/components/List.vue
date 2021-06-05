@@ -2,18 +2,19 @@
 <div key="list.id">
   <ul
   v-for="list in lists" :key="list.id"
-  v-bind:items="items" > 
+  v-bind:items="items"> 
     <li>
     <input type="checkbox" 
     v-model="list.isShown"
     >  
-    List {{list.id}}
+    List {{list.id}} 
+
       <ul v-if="list.isShown">
       <Item 
       @amount-changed="changeItemAmount"
-      v-bind:items="items"
-      v-bind:keys="keys"/>
+      v-bind:items="items"/>
       </ul>
+      
     </li>
   </ul>
 </div>
@@ -24,18 +25,19 @@ import Item from './Item'
 export default {
   name: 'List',
   data() {
-    return{
-
+    return {
     }
   },
-  props:['lists','items'],
+  props:['lists','items','lengths'],
   components: {
       Item
   },
   methods: {
     changeItemAmount(idx,val) {
       this.$emit('amount-changed', idx, val);
-  }
+  },
+    checkAll(){
+    }
 },
 }
 </script>
