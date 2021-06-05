@@ -1,9 +1,10 @@
 <template>
   <li v-for="item in items"
-v-bind:item="item" :key="item.color"> 
-<input type="checkbox" v-model="item.isChecked">
-  <input @change="onAmountChange" type="number" v-model="item.amount"> 
-  <input @change="onColorChange" type="color" v-model="item.color">
+  v-bind:items="items" 
+  :key="item.key"> 
+  <input type="checkbox" v-model="item.isChecked">
+  <input @change="onAmountChange(item)" type="number" v-model="item.amount"> 
+  <input type="color" v-model="item.color">
   </li>
 </template>
 
@@ -11,14 +12,20 @@ v-bind:item="item" :key="item.color">
 export default {
   name: 'Item',
   props: ['items'],
-  methods: {
-    onColorChange() {
-      'color changed'
-    },
-    onAmountChange() {
-      'amount changed'
+  data() {
+    return {
+      color: '',
+      amount: '',
     }
-  }
+  },
+  methods: {
+    onAmountChange(item) {
+      let idx = this.items.indexOf(item);
+      let init = item.amount;
+      let val = parseInt(init)
+      this.$emit('amount-changed', idx, val);
+    }
+  },
 }
 </script>
 
@@ -27,11 +34,17 @@ export default {
 h3 {
   margin: 40px 0 0;
 }
+input[type='number'] {
+  border:none;
+     margin-left: 50px;
+}
+input[type='color'] {
+  border:none;
+  width: 30px;
+  height: 30px;
+}
 li {
-   list-style-type: none
+   list-style-type: none;
 }
 
-a {
-  color: #42b983;
-}
 </style>

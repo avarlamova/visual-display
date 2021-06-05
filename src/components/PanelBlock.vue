@@ -3,7 +3,9 @@
   v-bind:id="id">
       Block {{id}}
       <VisualList 
+       @item-deleted="deleteItem"
       v-bind:items="items"/>
+      {{items}}
   </div>
 </template>
 
@@ -16,6 +18,9 @@ export default {
     VisualList
   },
   methods: {
+         deleteItem(idx, val) {
+      this.$emit('item-deleted', idx, val);
+    },
 },
 }
 </script>

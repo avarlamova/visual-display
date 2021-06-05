@@ -1,15 +1,18 @@
 <template>
-<div>
+<div key="list.id">
   <ul
-  v-for="list in lists"
-  v-bind:list="list" :key="list.id"> 
+  v-for="list in lists" :key="list.id"
+  v-bind:items="items" > 
     <li>
     <input type="checkbox" 
     v-model="list.isShown"
     >  
     List {{list.id}}
       <ul v-if="list.isShown">
-      <Item v-bind:items="items" />
+      <Item 
+      @amount-changed="changeItemAmount"
+      v-bind:items="items"
+      v-bind:keys="keys"/>
       </ul>
     </li>
   </ul>
@@ -20,12 +23,20 @@
 import Item from './Item'
 export default {
   name: 'List',
-  props:['lists', 'items'],
+  data() {
+    return{
+
+    }
+  },
+  props:['lists','items'],
   components: {
       Item
   },
   methods: {
+    changeItemAmount(idx,val) {
+      this.$emit('amount-changed', idx, val);
   }
+},
 }
 </script>
 
@@ -34,7 +45,5 @@ export default {
 li {
    list-style-type: none
 }
-.circle-check {
-  list-style-type: circle
-}
+
 </style>

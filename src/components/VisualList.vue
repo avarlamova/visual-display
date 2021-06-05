@@ -2,9 +2,14 @@
   <div v-for="list in lists"
     v-bind:list="list" :key="list.id"> 
     Block {{list.id}}
+  <button v-if="isShuffled===false" @click="shuffle()"> Shuffle </button>
+  <button v-if="isShuffled" @click="shuffle()"> Sort </button>
     <VisualItem
+    v-if="list.isShown"
     v-bind:id="list.id"
-    v-bind:items="items" />
+    v-bind:items="items"
+    v-bind:isShuffled="isShuffled"
+    @item-deleted="deleteItem" />
   </div>
 </template>
 
@@ -12,10 +17,23 @@
 import VisualItem from './VisualItem.vue'
 export default {
   name: 'VisualList',
-  props: ['lists','items'],
+  data() {
+    return {
+      isShuffled:false,
+    }
+  },
+  props: ['lists', 'items'],
   components: {
       VisualItem
-  }
+  },
+  methods: {
+    shuffle() {
+    this.isShuffled = !this.isShuffled
+    },
+     deleteItem(idx, val) {
+      this.$emit('item-deleted', idx, val);
+    },
+  },
 }
 </script>
 
